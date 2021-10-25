@@ -10,8 +10,8 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100px;
-    width: 400px;
+    height: 60px;
+    width: 550px;
 }
 .col {
     display: flex;
