@@ -12,10 +12,10 @@ This button will be available to push at any time.
 ## WireFram
 
 #### **Starting Page**
-![This is an image]('https://github.com/iwaggoner/sudoku-solver/wirefram-img/Front-Page.png')
+![This is an image](https://github.com/iwaggoner/sudoku-solver/wirefram-img/Front-Page.png)
 
 #### **Gameplay Page**
-![This is an image]('https://github.com/iwaggoner/sudoku-solver/wirefram-img/Play-Page.png')
+![This is an image](https://github.com/iwaggoner/sudoku-solver/wirefram-img/Play-Page.png)
 
 ## MVP
 
