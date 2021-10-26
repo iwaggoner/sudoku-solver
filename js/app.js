@@ -88,38 +88,58 @@ form.addEventListener('submit', (e)=> {
         return value !== 0
     }
 
-    const getNewNum = () => {
+    const getNewNum = (board, pos) => {
         console.log('getting new num')
         console.log(takenNums)
-            for(let i = 0;i<50;i++) {
-            var newNum = Math.floor(Math.random()*5)
-                if(takenNums.includes(`${newNum}`) || newNum == 0){
+                for(let i = 1;i<10;i++){
+                if(takenNums.includes(`${i}`)){
                 } else {
                     console.log('adding num to array')
-                    console.log(newNum)
-                    console.log(currentRow,currentCol)
-                    rows[currentRow][currentCol] = `${newNum}`
-                    cols[currentCol][currentRow] = `${newNum}`
+                    console.log(i)
+                    board[pos[0]][pos[1]] = i
                     break
                 }
             } 
     }
 
-    const solveBoard = () => {
-            while(boradSolved){
-                lookForEmptyCell()
-                getUsedNums()
-                getNewNum()
-                takenNums = []
-                console.log(rows)
-                console.log(cols)
-        }
-    }
+    // const solveBoard = () => {
+    //         while(boradSolved){
+    //             lookForEmptyCell()
+    //             getUsedNums()
+    //             getNewNum()
+    //             takenNums = []
+    //             console.log(rows)
+    //             console.log(cols)
+    //     }
+    // }
 
+    const test = (board) => {
 
     lookForEmptyCell(board)
     console.log(currentPos)
     getUsedNums(board, currentPos)
+    getNewNum(board,currentPos)
+    console.log(board)
+    }
+
+    // print out solved board
+    // also help debug
+    const setBoard = (board) => {
+        var inputSelector = 1
+        for(let i = 0;i<board[0].length;i++){
+            for(let j = 0;j<board[0].length;j++){
+                console.log(inputSelector,i,j,board[i][j])
+                document.getElementById(`solved${inputSelector}`).textContent = board[i][j]
+                inputSelector += 1
+            }
+        }
+    }
+    
+    test(board)
+    setBoard(board)
+    
+    
+   
 
     
 
