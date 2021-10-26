@@ -10,16 +10,19 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 60px;
-    width: 550px;
+    height: 80px;
+    width: 600px;
 }
 .col {
+    background-color: white;
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 30px;
     color: white;
     font-weight: 700;
+    margin: 3px;
+    height: 95%;
 }
 
 #board {
@@ -43,4 +46,8 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+input {
+    margin: 0px;
 }

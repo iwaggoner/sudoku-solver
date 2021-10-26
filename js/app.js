@@ -12,53 +12,36 @@ document.getElementById('solvedBoard').style.display = 'none'
 form.addEventListener('submit', (e)=> {
 
     e.preventDefault()
-    var currentRow 
-    var currentCol
+    var currentPos = []
     var takenNums = []
     var boradSolved = true
 
-    const input1 = document.getElementById('input1')
-    const input2 = document.getElementById('input2')
-    const input3 = document.getElementById('input3')
-    const input4 = document.getElementById('input4')
-    const input5 = document.getElementById('input5')
-    const input6 = document.getElementById('input6')
-    const input7 = document.getElementById('input7')
-    const input8 = document.getElementById('input8')
-    const input9 = document.getElementById('input9')
-    const input10 = document.getElementById('input10')
-    const input11 = document.getElementById('input11')
-    const input12 = document.getElementById('input12')
-    const input13 = document.getElementById('input13')
-    const input14 = document.getElementById('input14')
-    const input15 = document.getElementById('input15')
-    const input16 = document.getElementById('input16')
-    
-    const rows = [ 
-        [input1.value,input2.value,input3.value,input4.value],
-        [input5.value,input6.value,input7.value,input8.value],
-        [input9.value,input10.value,input11.value,input12.value],
-        [input13.value,input14.value,input15.value,input16.value]
-    ]
-    const cols = [ 
-        [input1.value,input5.value,input9.value,input13.value],
-        [input2.value,input6.value,input10.value,input14.value],
-        [input3.value,input7.value,input11.value,input15.value],
-        [input4.value,input8.value,input12.value,input16.value]
+    var rows = [
+        [5,3,0,0,7,0,0,0,0],
+        [6,0,0,1,9,5,0,0,0],
+        [0,9,8,0,0,0,0,6,0],
+        [8,0,0,0,6,0,0,0,3],
+        [4,0,0,8,0,3,0,0,1],
+        [7,0,0,0,2,0,0,0,6],
+        [0,6,0,0,0,0,2,8,0],
+        [0,0,0,4,1,9,0,0,5],
+        [0,0,0,0,8,0,0,7,9]
     ]
 
     document.getElementById('form').style.display = 'none'
     document.getElementById('unsolved').style.display = 'none'
     
+    
     // function that looks for empty cell
+    // then saved empty location in var currentRow and currentCol
     const lookForEmptyCell = () => {
         console.log('looking for empty cell')  
         for (let i = 0;i<rows.length;i++) {
             for(let j = 0;j<rows[i].length;j++){
                 if(rows[i][j] == ''){
                     console.log('found empty cell')
-                    currentRow = i
-                    currentCol = j
+                    currentPos.push(i)
+                    currentPos.push(j)
                     console.log(currentRow,currentCol)
                     return
                 }
@@ -69,6 +52,7 @@ form.addEventListener('submit', (e)=> {
 
 
     // function that narrows down what numbers can fit in the current spot
+    // used to speed up program
     const getUsedNums = () => {
         console.log('getting Used Nums')
 
@@ -79,35 +63,7 @@ form.addEventListener('submit', (e)=> {
             colNums.forEach(colNums => takenNums.push(colNums))
 
             // get numbers in same box
-            if(currentRow < 2 && currentCol < 2){
-                console.log('first quardrant')
-                takenNums.push(rows[0][0])
-                takenNums.push(rows[0][1])
-                takenNums.push(rows[1][0])
-                takenNums.push(rows[1][1])
-
-            } else if(currentRow > 1 && currentCol < 2){
-                console.log('second quardrant')
-                takenNums.push(rows[2][0])
-                takenNums.push(rows[2][1])
-                takenNums.push(rows[3][0])
-                takenNums.push(rows[3][1])
-
-            } else if(currentRow < 2 && currentCol > 1) {
-                console.log('third quardrant')
-                takenNums.push(rows[0][2])
-                takenNums.push(rows[0][3])
-                takenNums.push(rows[1][2])
-                takenNums.push(rows[1][3])
-
-            }  else if(currentRow > 1 && currentCol > 1 ) {
-                console.log('fourth quardrant')
-                takenNums.push(rows[2][2])
-                takenNums.push(rows[2][3])
-                takenNums.push(rows[3][2])            
-                takenNums.push(rows[3][3])
-
-            }
+            
     }
 
     function isNotEmpty(value) {
@@ -142,23 +98,7 @@ form.addEventListener('submit', (e)=> {
         }
     }
 
-    solveBoard()
-    document.getElementById('solved1').innerText = rows[0][0]
-    document.getElementById('solved2').innerText = rows[0][1]
-    document.getElementById('solved3').innerText = rows[0][2]
-    document.getElementById('solved4').innerText = rows[0][3]
-    document.getElementById('solved5').innerText = rows[1][0]
-    document.getElementById('solved6').innerText = rows[1][1]
-    document.getElementById('solved7').innerText = rows[1][2]
-    document.getElementById('solved8').innerText = rows[1][3]
-    document.getElementById('solved9').innerText = rows[2][0]
-    document.getElementById('solved10').innerText = rows[2][1]
-    document.getElementById('solved11').innerText = rows[2][2]
-    document.getElementById('solved12').innerText = rows[2][3]
-    document.getElementById('solved13').innerText = rows[3][0]
-    document.getElementById('solved14').innerText = rows[3][1]
-    document.getElementById('solved15').innerText = rows[3][2]
-    document.getElementById('solved16').innerText = rows[3][3]
+    
 
     document.getElementById('solved').style.display = 'flex'
     document.getElementById('solvedBoard').style.display = 'flex'
