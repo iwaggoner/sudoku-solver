@@ -16,7 +16,7 @@ form.addEventListener('submit', (e)=> {
     var takenNums = []
     var boradSolved = true
 
-    var rows = [
+    var board = [
         [5,3,0,0,7,0,0,0,0],
         [6,0,0,1,9,5,0,0,0],
         [0,9,8,0,0,0,0,6,0],
@@ -31,38 +31,38 @@ form.addEventListener('submit', (e)=> {
     document.getElementById('form').style.display = 'none'
     document.getElementById('unsolved').style.display = 'none'
     
-    
-    // function that looks for empty cell
-    // then saved empty location in var currentRow and currentCol
-    const lookForEmptyCell = () => {
+
+    // function that is passed the board and looks for empty cell
+    // Once it finds a empty cell it saves the location in currentPos array  [row, col]
+    const lookForEmptyCell = (board) => {
         console.log('looking for empty cell')  
-        for (let i = 0;i<rows.length;i++) {
-            for(let j = 0;j<rows[i].length;j++){
-                if(rows[i][j] == ''){
+        for (let i = 0;i<board[0].length;i++) {
+            for(let j = 0;j<board[0].length;j++){
+                if(board[i][j] == '' || board[i][j] == 0){
                     console.log('found empty cell')
                     currentPos.push(i)
                     currentPos.push(j)
-                    console.log(currentRow,currentCol)
                     return
                 }
             }
         }
-        boradSolved = false
     }
 
 
     // function that narrows down what numbers can fit in the current spot
     // used to speed up program
-    const getUsedNums = () => {
+    const getUsedNums = (board, currentPos) => {
         console.log('getting Used Nums')
 
-            var rowNums = rows[currentRow].filter(isNotEmpty)
+            var rowNums = board[currentRow].filter(isNotEmpty)
             rowNums.forEach(rowNums => takenNums.push(rowNums))
 
             var colNums = cols[currentCol].filter(isNotEmpty)
             colNums.forEach(colNums => takenNums.push(colNums))
 
             // get numbers in same box
+
+
             
     }
 
@@ -98,6 +98,9 @@ form.addEventListener('submit', (e)=> {
         }
     }
 
+
+    lookForEmptyCell(board)
+    console.log(currentPos)
     
 
     document.getElementById('solved').style.display = 'flex'
