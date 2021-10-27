@@ -12,11 +12,11 @@ document.getElementById('solvedBoard').style.display = 'none'
 form.addEventListener('submit', (e)=> {
 
     e.preventDefault()
-    var currentPos = []
-    var takenNums = []
-    var boradSolved = true
+    let rowPos = []
+    let takenNums = []
+    let boradSolved = true
 
-    var board = [
+    let rows = [
         [5,3,0,0,7,0,0,0,0],
         [6,0,0,1,9,5,0,0,0],
         [0,9,8,0,0,0,0,6,0],
@@ -27,30 +27,54 @@ form.addEventListener('submit', (e)=> {
         [0,0,0,4,1,9,0,0,5],
         [0,0,0,0,8,0,0,7,9]
     ]
+    let cols = [
+        [5,6,0,8,4,7,0,0,0],
+        [3,0,9,0,0,0,6,0,0],
+        [0,0,8,0,0,0,0,0,0],
+        [0,1,0,0,8,0,0,4,0],
+        [7,9,0,6,0,2,0,1,8],
+        [0,5,0,0,3,0,0,9,0],
+        [0,0,0,0,0,0,2,0,0],
+        [0,0,6,0,0,0,8,0,7],
+        [0,0,0,3,1,6,0,5,9]
+    ]
+    let boxes = [
+        [5,3,0,6,0,0,0,9,8],
+        [0,7,0,1,9,5,0,0,0],
+        [0,0,0,0,0,0,0,6,0],
+        [8,0,0,4,0,0,7,0,0],
+        [0,6,0,8,0,3,0,2,0],
+        [0,0,3,0,0,1,0,0,6],
+        [0,6,0,0,0,0,0,0,0],
+        [0,0,0,4,1,9,0,8,0],
+        [2,8,0,0,0,5,0,7,9]
+    ]
+
 
     document.getElementById('form').style.display = 'none'
     document.getElementById('unsolved').style.display = 'none'
+    document.getElementById('solved').style.display = 'flex'
+    document.getElementById('solvedBoard').style.display = 'flex'
     
 
     // function that is passed the board and looks for empty cell
     // Once it finds a empty cell it saves the location in currentPos array  [row, col]
-    const lookForEmptyCell = (board) => {
+    const lookForEmptyCell = (rows) => {
         console.log('looking for empty cell')  
-        for (let i = 0;i<board[0].length;i++) {
-            for(let j = 0;j<board[0].length;j++){
-                if(board[i][j] == 0){
+        for (let i = 0;i<rows[0].length;i++) {
+            for(let j = 0;j<rows[0].length;j++){
+                if(rows[i][j] == 0){
                     console.log('found empty cell')
-                    currentPos.push(i)
-                    currentPos.push(j)
-                    console.log(currentPos)
-                    return
+                    rowPos.push(i)
+                    rowPos.push(j)
+                    console.log(rows[i][j])
+                    console.log(rowPos)
+                    return false
                 }
             }
         }
         return true
     }
-
-
 
     // has to pass num from getNewNum, board, and current position
     // then test the row position gives
@@ -58,33 +82,41 @@ form.addEventListener('submit', (e)=> {
     // then test box based on postion
     // if passes all test returns true
     // if fails any test returns false
-    const correctBoard = (board, num, currentPos) => {
+    const correctBoard = (rows, cols, boxes, num, currentPos) => {
 
         // checks all rows
-        for(let i = 0;i<board[0].length;i++){
-            if(board[currentPos[0]][i] == num){
-                console.log('found false in row')
-                return false
-            }
+        if(rows[currentPos[0]].includes(num)) {
+            console.log('found false in row')
+            return false
         }
         // checks all cols
-        for(let i = 0;i<board[0].length;i++){
-            if(board[i][currentPos[1]] == num){
-                console.log('found false in col')
-                return false
-            }
+        if(cols[currentPos[1]].includes(num)){
+            console.log('found false in col')
+            return false
         }
-        var startX = Math.floor(currentPos[0]/3)
-        var startY = Math.floor(currentPos[1]/3)
-            // set up double loop to collect each non 0 element in postion box
-            for(let i = 0;i<startX+3;i++){
-                for(let j = 0;j<startY+3;j++){
-                    if(board[i][j] == num){
-                        console.log('found false in box')
-                        return false
-                    } 
-                }
-            }
+        // use position found to find box array
+        let startX = (Math.floor(currentPos[0]/3))
+        let startY = (Math.floor(currentPos[1]/3))
+        console.log(startX,startY)
+        switch (startX) {
+            case (0):
+                break
+            case (1):
+                startX += 3
+                break
+            case (2):
+                startX += 4
+                break
+            default:
+                break
+        }
+        console.log(startX,startY)
+        console.log(startX+startY)
+        // set up double loop to collect each non 0 element in postion box
+        if(boxes[startX+startY].includes(num)) {
+            console.log('found false in box')
+            return false
+        }     
         return true
     }
 
@@ -102,13 +134,14 @@ form.addEventListener('submit', (e)=> {
                     console.log('adding num to array after test for correct was true')
                     console.log(i)
                     board[pos[0]][pos[1]] = i
+                    setBoard(board)
                     if(test(board)) {
-                        console.log('running test again')
+                        console.log('Test came back true and there are no zeros on board')
                         return true
                     }
                 }
                 else {
-                    board[pos[0]][pos[1]] = 0
+                    board[pos[0]][pos[1]] == 0
                     console.log('correctBoard was false for', i)
                     console.log('setting',pos,'to 0')
                 }
@@ -130,19 +163,22 @@ form.addEventListener('submit', (e)=> {
     // print out solved board
     // also help debug
     // is much better as for loop rather than 81 lines of code
-    const setBoard = (board) => {
-        var inputSelector = 1
-        for(let i = 0;i<board[0].length;i++){
-            for(let j = 0;j<board[0].length;j++){
-                document.getElementById(`solved${inputSelector}`).textContent = board[i][j]
+    const setBoard = (rows) => {
+        let inputSelector = 1
+        for(let i = 0;i<rows[0].length;i++){
+            for(let j = 0;j<rows[0].length;j++){
+                document.getElementById(`solved${inputSelector}`).textContent = rows[i][j]
                 inputSelector += 1
             }
         }
     }
-    
-    test(board)
-    setBoard(board)
 
-    document.getElementById('solved').style.display = 'flex'
-    document.getElementById('solvedBoard').style.display = 'flex'
+    const pos1 = [8,0]
+
+    
+    correctBoard(rows, cols, boxes, 12, pos1)
+    // test(board)
+    setBoard(rows)
+
+    
 })
