@@ -18,7 +18,7 @@ form.addEventListener('submit', (e)=> {
     const getInputs = () => {
         let inputKeeper = 1
         let inputArray = []
-        for(let i = 0;i<80;i++){
+        for(let i = 0;i<81;i++){
             inputArray.push(document.getElementById(`input${inputKeeper}`).value)
             inputKeeper += 1
         }
@@ -28,37 +28,37 @@ form.addEventListener('submit', (e)=> {
     const inputs = getInputs()
 
     let rows = [
-        [5,3,0,0,7,0,0,0,0],
-        [6,0,0,1,9,5,0,0,0],
-        [0,9,8,0,0,0,0,6,0],
-        [8,0,0,0,6,0,0,0,3],
-        [4,0,0,8,0,3,0,0,1],
-        [7,0,0,0,2,0,0,0,6],
-        [0,6,0,0,0,0,2,8,0],
-        [0,0,0,4,1,9,0,0,5],
-        [0,0,0,0,8,0,0,7,9]
-    ]
+        [inputs[0],inputs[1],inputs[2],inputs[3],inputs[4],inputs[5],inputs[6],inputs[7],inputs[8]],
+        [inputs[9],inputs[10],inputs[11],inputs[12],inputs[13],inputs[14],inputs[15],inputs[16],inputs[17]],
+        [inputs[18],inputs[19],inputs[20],inputs[21],inputs[22],inputs[23],inputs[24],inputs[25],inputs[26]],
+        [inputs[27],inputs[28],inputs[29],inputs[30],inputs[31],inputs[32],inputs[33],inputs[34],inputs[35]],
+        [inputs[36],inputs[37],inputs[38],inputs[39],inputs[40],inputs[41],inputs[42],inputs[43],inputs[44]],
+        [inputs[45],inputs[46],inputs[47],inputs[48],inputs[49],inputs[50],inputs[51],inputs[52],inputs[53]],
+        [inputs[54],inputs[55],inputs[56],inputs[57],inputs[58],inputs[59],inputs[60],inputs[61],inputs[62]],
+        [inputs[63],inputs[64],inputs[65],inputs[66],inputs[67],inputs[68],inputs[69],inputs[70],inputs[71]],
+        [inputs[72],inputs[73],inputs[74],inputs[75],inputs[76],inputs[77],inputs[78],inputs[79],inputs[80]],
+    ] 
     let cols = [
-        [5,6,0,8,4,7,0,0,0],
-        [3,0,9,0,0,0,6,0,0],
-        [0,0,8,0,0,0,0,0,0],
-        [0,1,0,0,8,0,0,4,0],
-        [7,9,0,6,0,2,0,1,8],
-        [0,5,0,0,3,0,0,9,0],
-        [0,0,0,0,0,0,2,0,0],
-        [0,0,6,0,0,0,8,0,7],
-        [0,0,0,3,1,6,0,5,9]
+        [inputs[0],inputs[9],inputs[18],inputs[27],inputs[36],inputs[45],inputs[54],inputs[63],inputs[72]],
+        [inputs[1],inputs[10],inputs[19],inputs[28],inputs[37],inputs[46],inputs[55],inputs[64],inputs[73]],
+        [inputs[2],inputs[11],inputs[20],inputs[29],inputs[38],inputs[47],inputs[56],inputs[65],inputs[74]],
+        [inputs[3],inputs[12],inputs[21],inputs[30],inputs[39],inputs[48],inputs[57],inputs[66],inputs[75]],
+        [inputs[4],inputs[13],inputs[22],inputs[31],inputs[40],inputs[49],inputs[58],inputs[67],inputs[76]],
+        [inputs[5],inputs[14],inputs[23],inputs[32],inputs[41],inputs[50],inputs[59],inputs[68],inputs[77]],
+        [inputs[6],inputs[15],inputs[24],inputs[33],inputs[42],inputs[51],inputs[60],inputs[69],inputs[78]],
+        [inputs[7],inputs[16],inputs[25],inputs[34],inputs[43],inputs[52],inputs[61],inputs[70],inputs[79]],
+        [inputs[8],inputs[17],inputs[26],inputs[35],inputs[44],inputs[53],inputs[62],inputs[71],inputs[80]]
     ]
     let boxes = [
-        [5,3,0,6,0,0,0,9,8],
-        [0,7,0,1,9,5,0,0,0],
-        [0,0,0,0,0,0,0,6,0],
-        [8,0,0,4,0,0,7,0,0],
-        [0,6,0,8,0,3,0,2,0],
-        [0,0,3,0,0,1,0,0,6],
-        [0,6,0,0,0,0,0,0,0],
-        [0,0,0,4,1,9,0,8,0],
-        [2,8,0,0,0,5,0,7,9]
+        [inputs[0],inputs[1],inputs[2],inputs[9],inputs[10],inputs[11],inputs[18],inputs[19],inputs[20]],
+        [inputs[3],inputs[4],inputs[5],inputs[12],inputs[13],inputs[14],inputs[21],inputs[22],inputs[23]],
+        [inputs[6],inputs[7],inputs[8],inputs[15],inputs[16],inputs[17],inputs[24],inputs[25],inputs[26]],
+        [inputs[27],inputs[28],inputs[29],inputs[36],inputs[37],inputs[38],inputs[45],inputs[46],inputs[47]],
+        [inputs[30],inputs[31],inputs[32],inputs[39],inputs[40],inputs[41],inputs[48],inputs[49],inputs[50]],
+        [inputs[33],inputs[34],inputs[35],inputs[42],inputs[43],inputs[44],inputs[51],inputs[52],inputs[53]],
+        [inputs[54],inputs[55],inputs[56],inputs[63],inputs[64],inputs[65],inputs[72],inputs[73],inputs[74]],
+        [inputs[57],inputs[58],inputs[59],inputs[66],inputs[67],inputs[68],inputs[75],inputs[76],inputs[77]],
+        [inputs[60],inputs[61],inputs[62],inputs[69],inputs[70],inputs[71],inputs[78],inputs[79],inputs[80]]
     ]
     document.getElementById('form').style.display = 'none'
     document.getElementById('unsolved').style.display = 'none'
@@ -75,7 +75,7 @@ form.addEventListener('submit', (e)=> {
     const runProgram = () => {
         for(let i = 0;i<9;i++){
             for(let j = 0;j<9;j++){
-                if(rows[i][j] == 0){
+                if(rows[i][j] == '0'){
 
                     let box = getBox(i,j)
 
@@ -145,7 +145,7 @@ form.addEventListener('submit', (e)=> {
         }
     }
     const notIncluded = (array) => {
-        const words = [1,2,3,4,5,6,7,8,9]
+        const words = ['1','2','3','4','5','6','7','8','9']
         const arrayX = []
         for(let i = 0;i<words.length;i++){
           if(array.includes(words[i]) != true){
@@ -193,10 +193,8 @@ form.addEventListener('submit', (e)=> {
             }
         }
     }
-
     solve()
     printBoard()
-    
     console.log(inputs)
 
 
