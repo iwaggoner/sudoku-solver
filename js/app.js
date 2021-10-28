@@ -12,9 +12,9 @@ document.getElementById('solvedBoard').style.display = 'none'
 form.addEventListener('submit', (e)=> {
 
     e.preventDefault()
-    let rowPos = []
-    let takenNums = []
-    let boradSolved = true
+    let emptyCells = []
+    let emptyCellNums = []
+    
 
     let rows = [
         [5,3,0,0,7,0,0,0,0],
@@ -49,136 +49,129 @@ form.addEventListener('submit', (e)=> {
         [0,0,0,4,1,9,0,8,0],
         [2,8,0,0,0,5,0,7,9]
     ]
-
-
     document.getElementById('form').style.display = 'none'
     document.getElementById('unsolved').style.display = 'none'
     document.getElementById('solved').style.display = 'flex'
     document.getElementById('solvedBoard').style.display = 'flex'
-    
 
-    // function that is passed the board and looks for empty cell
-    // Once it finds a empty cell it saves the location in currentPos array  [row, col]
-    const lookForEmptyCell = (rows) => {
-        console.log('looking for empty cell')  
-        for (let i = 0;i<rows[0].length;i++) {
-            for(let j = 0;j<rows[0].length;j++){
+    function cell(rows,cols,boxes,pos) {
+        this.rows = rows
+        this.cols = cols
+        this.boxes = boxes
+        this.pos = pos
+    }
+ 
+    const runProgram = () => {
+        for(let i = 0;i<9;i++){
+            for(let j = 0;j<9;j++){
                 if(rows[i][j] == 0){
-                    console.log('found empty cell')
-                    rowPos.push(i)
-                    rowPos.push(j)
-                    console.log(rows[i][j])
-                    console.log(rowPos)
-                    return false
+
+                    let box = getBox(i,j)
+
+                    let cell0 = new cell(rows[i],cols[j],boxes[box[0]+box[1]],[i,j])
+                    emptyCells.push(cell0)
                 }
             }
         }
-        return true
+    }
+    
+    const getEmptyCellNums = () => {
+        let arrayOfNums = []
+        let counter = 0
+        let missingNum = 0
+        for(let i = 0;i<emptyCells.length;i++){
+            for(let j = 0;j<9;j++) {
+                if(emptyCells[i].rows[j] != 0){
+                    arrayOfNums.push(emptyCells[i].rows[j])
+                }
+                if(emptyCells[i].cols[j] != 0){
+                    arrayOfNums.push(emptyCells[i].cols[j])
+                }
+                if(emptyCells[i].boxes[j] != 0){
+                    arrayOfNums.push(emptyCells[i].boxes[j])
+                }
+            }
+            emptyCellNums.push(arrayOfNums)
+            arrayOfNums = []
+        }
     }
 
-    // has to pass num from getNewNum, board, and current position
-    // then test the row position gives
-    // then tests col position is in
-    // then test box based on postion
-    // if passes all test returns true
-    // if fails any test returns false
-    const correctBoard = (rows, cols, boxes, num, currentPos) => {
-
-        // checks all rows
-        if(rows[currentPos[0]].includes(num)) {
-            console.log('found false in row')
-            return false
-        }
-        // checks all cols
-        if(cols[currentPos[1]].includes(num)){
-            console.log('found false in col')
-            return false
-        }
-        // use position found to find box array
-        let startX = (Math.floor(currentPos[0]/3))
-        let startY = (Math.floor(currentPos[1]/3))
-        console.log(startX,startY)
-        switch (startX) {
+    const getBox = (i,j) => {
+        let boxX = Math.floor(i/3)
+        let boxY = Math.floor(j/3)
+        switch (boxX) {
             case (0):
                 break
             case (1):
-                startX += 3
+                boxX +=2
                 break
             case (2):
-                startX += 4
+                boxX +=4
                 break
             default:
                 break
         }
-        console.log(startX,startY)
-        console.log(startX+startY)
-        // set up double loop to collect each non 0 element in postion box
-        if(boxes[startX+startY].includes(num)) {
-            console.log('found false in box')
-            return false
-        }     
-        return true
-    }
-
-    // used equation to filter out all values that are not 0
-    function isNotEmpty(value) {
-        return value !== 0
-    }
-
-    // takes in board and postion, then trys to inscert numbers 1-9 into position
-    // once correct board comes back true it sets that number into that location and breaks loop ends function
-    const getNewNum = (board, pos) => {
-        console.log('getting new num')
-            for(let i = 1;i<10;i++){
-                if(correctBoard(board, i, pos)){
-                    console.log('adding num to array after test for correct was true')
-                    console.log(i)
-                    board[pos[0]][pos[1]] = i
-                    setBoard(board)
-                    if(test(board)) {
-                        console.log('Test came back true and there are no zeros on board')
-                        return true
-                    }
-                }
-                else {
-                    board[pos[0]][pos[1]] == 0
-                    console.log('correctBoard was false for', i)
-                    console.log('setting',pos,'to 0')
-                }
-            }
-            
-    } 
-    
-
-
-    const test = (board) => {
-        currentPos = []
-        if(lookForEmptyCell(board)){
-            console.log('look for empty cell came back true, Board is solved')
-            return true
+        let boxI = i%3
+        let boxJ = j%3
+        switch (boxI) {
+            case (0):
+                break
+            case (1):
+                 boxI+=2
+                break
+            case (2):
+                boxI +=4
+                break
+            default:
+                break
         }
-        getNewNum(board,currentPos)
+        return [boxX,boxY,boxI,boxJ]
     }
 
-    // print out solved board
-    // also help debug
-    // is much better as for loop rather than 81 lines of code
-    const setBoard = (rows) => {
-        let inputSelector = 1
-        for(let i = 0;i<rows[0].length;i++){
-            for(let j = 0;j<rows[0].length;j++){
-                document.getElementById(`solved${inputSelector}`).textContent = rows[i][j]
-                inputSelector += 1
+    const reverseEmptyCells = () => { 
+        for(let i = 0;i<emptyCellNums.length;i++){
+            emptyCellNums[i] = notIncluded(emptyCellNums[i])
+        }
+    }
+    const notIncluded = (array) => {
+        const words = [1,2,3,4,5,6,7,8,9]
+        const arrayX = []
+        for(let i = 0;i<words.length;i++){
+          if(array.includes(words[i]) != true){
+              arrayX.push(words[i])
+          }
+        }
+        return arrayX
+    }
+
+    const enterUniqueSolutions = () => {
+        for(let i = 0;i<emptyCellNums.length;i++){
+            if(emptyCellNums[i].length == 1){
+                rows[emptyCells[i].pos[0]][emptyCells[i].pos[1]] = emptyCellNums[i][0]
+                cols[emptyCells[i].pos[1]][emptyCells[i].pos[0]] = emptyCellNums[i][0]
+                let box = getBox(emptyCells[i].pos[0],emptyCells[i].pos[1])
+                boxes[box[0]+box[1]][box[2]+box[3]] = emptyCellNums[i][0]
             }
         }
     }
 
-    const pos1 = [8,0]
+    const solve = () => {
+        while(true){
+            runProgram()
+            getEmptyCellNums()
+            reverseEmptyCells()
+            enterUniqueSolutions()
+            console.log(emptyCellNums)
+            console.log(rows)
+            console.log(cols)
+            console.log(boxes)
+            if(emptyCells.length < 1){
+                break
+            }
+            emptyCells = []
+            emptyCellNums = []
+        }
+    }
 
-    
-    correctBoard(rows, cols, boxes, 12, pos1)
-    // test(board)
-    setBoard(rows)
-
-    
+    solve()
 })
