@@ -15,6 +15,17 @@ form.addEventListener('submit', (e)=> {
     let emptyCells = []
     let emptyCellNums = []
     
+    const getInputs = () => {
+        let inputKeeper = 1
+        let inputArray = []
+        for(let i = 0;i<80;i++){
+            inputArray.push(document.getElementById(`input${inputKeeper}`).value)
+            inputKeeper += 1
+        }
+        return inputArray
+    }
+
+    const inputs = getInputs()
 
     let rows = [
         [5,3,0,0,7,0,0,0,0],
@@ -173,5 +184,20 @@ form.addEventListener('submit', (e)=> {
         }
     }
 
+    const printBoard = () => {
+        let solvedPlace = 1
+        for(let i = 0;i<9;i++){
+            for(let j = 0;j<9;j++){
+                document.getElementById(`solved${solvedPlace}`).innerText = rows[i][j]
+                solvedPlace += 1
+            }
+        }
+    }
+
     solve()
+    printBoard()
+    
+    console.log(inputs)
+
+
 })
