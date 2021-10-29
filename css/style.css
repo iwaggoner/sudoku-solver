@@ -3,7 +3,6 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-content: center;
     height: 100%;
     width: 100%;
     background-color: #FFFAF0;
@@ -26,8 +25,10 @@ h6 {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 80px;
-    width: 600px;
+    height: 60px;
+    width: 550px;
+    margin: 1px;
+    border: 1px solid black
 }
 .col {
     background-color: white;
@@ -38,7 +39,7 @@ h6 {
     color: black;
     font-weight: 700;
     margin: 3px;
-    height: 95%;
+    height: 100%;
 }
 
 #board {
@@ -46,6 +47,7 @@ h6 {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    height: 50%;
 }
 
 #submit {
