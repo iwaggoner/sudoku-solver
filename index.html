@@ -9,10 +9,12 @@
     <title>Sudoku-Solver</title>
 </head>
 <body>
-    <div class="container-lg bg-primary text-light"><h2>Sudoku-Solver</h2></div>
+    <div class="container-fluid bg-primary text-light"><h2>Sudoku-Solver</h2></div>
+   
     
-    <div class="container-md text-primary" id='board'>
+    <div class="container-fluid text-primary" id='board'>
         <h2 id="unsolved">Input Unsolved Board</h2>
+        <h6 id='subHead'>App will only take inputs that are 0-9 and once filled out please click the submit button to see results!</h6>
         <form id='form'>
             <div class = 'row bg-black'>
                 <div class="col">
@@ -279,9 +281,10 @@
         </form>
     </div>
 
-        <div class="container-md text-primary" id='solvedBoard'>
+    <div class="container-fluic text-primary" id='solvedBoard'>
 
         <h2 id="solved">Solved Board</h2>
+        <h6 id='solvedSub'>Board was solved! Try another by using the reset button.</h6>
         <div class = 'row bg-primary' id='solvedRow1'>
             <div class="col" id ="solved1">
             </div>
@@ -462,6 +465,7 @@
             <div class="col" id ="solved81">
             </div>
         </div>
+        <button id='reset' class='btn btn-dark text-light'>Reset</button>
     </div>  
 
 

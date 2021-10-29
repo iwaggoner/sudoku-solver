@@ -4,7 +4,7 @@
 // test rows, columns, and boxes
 // if correct move forward to next missing element
 
-const submitBnt = document.getElementById('submit')
+const resetButton = document.getElementById('reset')
 document.getElementById('solved').style.display = 'none'
 document.getElementById('solvedBoard').style.display = 'none'
 
@@ -62,6 +62,7 @@ form.addEventListener('submit', (e)=> {
     ]
     document.getElementById('form').style.display = 'none'
     document.getElementById('unsolved').style.display = 'none'
+    document.getElementById('subHead').style.display = 'none'
     document.getElementById('solved').style.display = 'flex'
     document.getElementById('solvedBoard').style.display = 'flex'
 
@@ -156,27 +157,37 @@ form.addEventListener('submit', (e)=> {
     }
 
     const enterUniqueSolutions = () => {
+        let returned = 0
         for(let i = 0;i<emptyCellNums.length;i++){
             if(emptyCellNums[i].length == 1){
                 rows[emptyCells[i].pos[0]][emptyCells[i].pos[1]] = emptyCellNums[i][0]
                 cols[emptyCells[i].pos[1]][emptyCells[i].pos[0]] = emptyCellNums[i][0]
                 let box = getBox(emptyCells[i].pos[0],emptyCells[i].pos[1])
                 boxes[box[0]+box[1]][box[2]+box[3]] = emptyCellNums[i][0]
+                returned += 1
             }
         }
+        return returned 
     }
 
     const solve = () => {
+        let returned = 0
         while(true){
             runProgram()
             getEmptyCellNums()
             reverseEmptyCells()
-            enterUniqueSolutions()
+            returned = enterUniqueSolutions()
+            console.log(returned)
             console.log(emptyCellNums)
             console.log(rows)
             console.log(cols)
             console.log(boxes)
             if(emptyCells.length < 1){
+                break
+            }
+            if(returned == 0){
+                document.getElementById(`solved`).innerText = 'Unable to solve board'
+                document.getElementById(`solvedSub`).innerText = 'Board was either unsovlable or too hard for this app! Try a different board with the reset button.'
                 break
             }
             emptyCells = []
@@ -196,6 +207,19 @@ form.addEventListener('submit', (e)=> {
     solve()
     printBoard()
     console.log(inputs)
+
+
+})
+
+resetButton.addEventListener('click', (e)=> {
+
+    document.getElementById('form').style.display = 'block'
+    document.getElementById('unsolved').style.display = 'block'
+    document.getElementById('subHead').style.display = 'flex'
+    document.getElementById('solved').style.display = 'none'
+    document.getElementById('solvedBoard').style.display = 'none'
+    document.getElementById(`solved`).innerText = 'Solved Board'
+    document.getElementById(`solvedSub`).innerText = 'Board was solved! Try a another with the reset button.'
 
 
 })

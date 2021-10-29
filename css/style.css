@@ -4,8 +4,24 @@ body {
     flex-direction: column;
     justify-content: center;
     align-content: center;
+    height: 100%;
+    width: 100%;
+    background-color: #FFFAF0;
+}
+div {
+    background-color: #FFFAF0;
 }
 
+h2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+h6 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 .row {
     display: flex;
     justify-content: center;
@@ -50,4 +66,8 @@ body {
 
 input {
     margin: 0px;
+}
+
+#reset {
+    margin: 10px
 }
