@@ -1,4 +1,6 @@
 
+https://iwaggoner.github.io/sudoku-solver/
+
 ## What the app does!
 
 Sudoku Solver is a app that allows user to enter a Sudoku board unfinished and see the solution.
