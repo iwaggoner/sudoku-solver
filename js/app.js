@@ -1,20 +1,22 @@
-// take in Array for 9x9
-// begin to fill in numbers for first missing array elements
-// generate random number after checking numbers in rows and columns as well as box to narrow down possiblities
-// test rows, columns, and boxes
-// if correct move forward to next missing element
+// get DOM elements needed for start of program 
+// hide solved board and reset button
 
 const resetButton = document.getElementById('reset')
 document.getElementById('solved').style.display = 'none'
 document.getElementById('solvedBoard').style.display = 'none'
 
 
+// added event listen for when submit button is pressed all inputs are submited
 form.addEventListener('submit', (e)=> {
 
+    // make sure my page dose not refresh 
+    // create arrays that will hold empty cells as objects 
+    // create array that will hold number that have been used by each object
     e.preventDefault()
     let emptyCells = []
     let emptyCellNums = []
     
+    // function that uses a for loop to push all inputs into my preset arrays
     const getInputs = () => {
         let inputKeeper = 1
         let inputArray = []
@@ -25,6 +27,7 @@ form.addEventListener('submit', (e)=> {
         return inputArray
     }
 
+    // run my function
     const inputs = getInputs()
 
     let rows = [
@@ -60,12 +63,15 @@ form.addEventListener('submit', (e)=> {
         [inputs[57],inputs[58],inputs[59],inputs[66],inputs[67],inputs[68],inputs[75],inputs[76],inputs[77]],
         [inputs[60],inputs[61],inputs[62],inputs[69],inputs[70],inputs[71],inputs[78],inputs[79],inputs[80]]
     ]
+    // fix my display so a reset button is show as well as my solved board
+    // hide all my input section
     document.getElementById('form').style.display = 'none'
     document.getElementById('unsolved').style.display = 'none'
     document.getElementById('subHead').style.display = 'none'
     document.getElementById('solved').style.display = 'flex'
     document.getElementById('solvedBoard').style.display = 'flex'
 
+    // class that creates objects that holds rows, cols, boxes, and pos
     function cell(rows,cols,boxes,pos) {
         this.rows = rows
         this.cols = cols
@@ -73,6 +79,8 @@ form.addEventListener('submit', (e)=> {
         this.pos = pos
     }
  
+    // this funciton finds each cell that holds a zero and push the row, col, and box array into the class
+    // it also saves the postion of the cell reltive of the row array
     const runProgram = () => {
         for(let i = 0;i<9;i++){
             for(let j = 0;j<9;j++){
@@ -87,6 +95,7 @@ form.addEventListener('submit', (e)=> {
         }
     }
     
+    // base on the object it this program will grab all of the used numbers
     const getEmptyCellNums = () => {
         let arrayOfNums = []
         let counter = 0
@@ -108,6 +117,7 @@ form.addEventListener('submit', (e)=> {
         }
     }
 
+    // is a method that can get the postion of the cell in the box array based on the row array
     const getBox = (i,j) => {
         let boxX = Math.floor(i/3)
         let boxY = Math.floor(j/3)
@@ -140,11 +150,14 @@ form.addEventListener('submit', (e)=> {
         return [boxX,boxY,boxI,boxJ]
     }
 
+    // this funciton calls notIncluded which takes all the used numbers and spits out which number are not used
+    // numbers 1-9
     const reverseEmptyCells = () => { 
         for(let i = 0;i<emptyCellNums.length;i++){
             emptyCellNums[i] = notIncluded(emptyCellNums[i])
         }
     }
+    // function that is used by reversEmptyCells
     const notIncluded = (array) => {
         const words = ['1','2','3','4','5','6','7','8','9']
         const arrayX = []
@@ -156,6 +169,7 @@ form.addEventListener('submit', (e)=> {
         return arrayX
     }
 
+    // When a cell finds a uniqueSolution this function is called and enters that solution in the cell for each array 
     const enterUniqueSolutions = () => {
         let returned = 0
         for(let i = 0;i<emptyCellNums.length;i++){
@@ -170,6 +184,7 @@ form.addEventListener('submit', (e)=> {
         return returned 
     }
 
+    // the final solve funciton
     const solve = () => {
         let returned = 0
         while(true){
